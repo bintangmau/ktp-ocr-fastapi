@@ -76,7 +76,10 @@ class KTPOCR(object):
             if 'NO.' in word:
                 self.result.alamat = self.result.alamat + ' '+word
             if "Kecamatan" in word:
-                self.result.kecamatan = word.split(':')[1].strip()
+                try:  
+                    self.result.kecamatan = word.split(':')[1].strip()
+                except:
+                    self.result.kecamatan = word
             if "Desa" in word:
                 wrd = word.split()
                 desa = []
@@ -85,7 +88,10 @@ class KTPOCR(object):
                         desa.append(wr)
                 self.result.kelurahan_atau_desa = ''.join(wr)
             if 'Kewarganegaraan' in word:
-                self.result.kewarganegaraan = word.split(':')[1].strip()
+                try:
+                    self.result.kewarganegaraan = word.split(':')[1].strip()
+                except:
+                    self.result.kewarganegaraan = word
             if 'Pekerjaan' in word:
                 wrod = word.split()
                 pekerjaan = []
@@ -96,11 +102,18 @@ class KTPOCR(object):
             if 'Agama' in word:
                 self.result.agama = word.replace('Agama',"").strip()
             if 'Perkawinan' in word:
-                self.result.status_perkawinan = word.split(':')[1]
+                try:
+                    self.result.status_perkawinan = word.split(':')[1]
+                except:
+                    self.result.status_perkawinan = word
+
             if "RTRW" in word:
                 word = word.replace("RTRW",'')
-                self.result.rt = word.split('/')[0].strip()
-                self.result.rw = word.split('/')[1].strip()
+                try:  
+                    self.result.rt = word.split('/')[0].strip()
+                    self.result.rw = word.split('/')[1].strip()
+                except:
+                    self.result.rw = word
 
     def master_process(self):
         raw_text = self.process(self.image)

@@ -37,6 +37,12 @@ def read(ktp_path):
         final.append(word)
     return final
 
+def extract(ktppath):
+    if ktppath:
+        ocr = KTPOCR(ktppath)
+        word = ocr.to_json()
+        return word
+
 if __name__ == "__main__":  
     try:  
         ktppath = sys.argv[1]    
